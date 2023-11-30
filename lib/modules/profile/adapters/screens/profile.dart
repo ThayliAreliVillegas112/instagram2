@@ -143,7 +143,20 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
               Column(
-                
+                children: [
+                  Row(
+                    children: [
+                        IconButton(
+                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                          onPressed: () {},
+                        ),
+                    ],
+                  )
+                ],
               )
             ],
           ),

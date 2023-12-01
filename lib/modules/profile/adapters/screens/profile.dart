@@ -9,6 +9,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool showGrid = true;
+  bool showText = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class _ProfileState extends State<Profile> {
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.messenger_outlined, color: Colors.black),
+            icon: const Icon(Icons.list, color: Colors.black),
             onPressed: () {},
           ),
         ],
@@ -39,21 +41,28 @@ class _ProfileState extends State<Profile> {
             children: [
               const Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 35.0,
-                  ),
-                  SizedBox(width: 20),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children:[
+                      CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 35.0,
+                      ),
+                      SizedBox(height: 10),
                       Text(
-                        'Thayli garcia',
+                        'Thayli Garcia',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                    ]
+                  ),
+                  
+                  SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      
                       SizedBox(height: 10),
                       Row(
                         children: [
@@ -81,25 +90,28 @@ class _ProfileState extends State<Profile> {
                       ),
                     ],
                   ),
+                  
                 ],
               ),
+
               const SizedBox(height: 30,),
               Row(
                 children: [
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
-                      // Acción para "Editar perfil"
+                      Navigator.of(context).pushNamed('/profile/edit');
                     },
-                    child: Text('Editar perfil'),
+                    child: const Text('Editar perfil'),
                   ),
-                  SizedBox(height: 40),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       // Acción para "Compartir perfil"
                     },
-                    child: Text('Compartir perfil'),
+                    child:const Text('Compartir perfil'),
                   ),
+                  const Spacer(),
                   InkWell(
                     onTap: () {
                       // Acción para el botón de compartir perfil
@@ -110,9 +122,10 @@ class _ProfileState extends State<Profile> {
                         color: ColorsApp.botones, // Puedes cambiar el color según tus necesidades
                       ),
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.share, color: Colors.white),
+                      child: const Icon(Icons.share, color: Colors.white),
                     ),
                   ),
+                  const Spacer()
                 ],
               ),
               const SizedBox(height: 12),
@@ -144,24 +157,75 @@ class _ProfileState extends State<Profile> {
               ),
               Column(
                 children: [
-                  Row(
-                    children: [
-                        IconButton(
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                          onPressed: () {},
-                        ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(40.0),
+                    child: Row(
+                      children: [
+                          const SizedBox(width: 10),
+                          IconButton(
+                            icon: const Icon(Icons.apps_outlined, color: Colors.black),
+                            onPressed: () {
+                              setState((){
+                                showGrid=true;
+                                showText=false;
+                              });
+                            },
+                          ),
+                           const SizedBox(width: 150),
+                          IconButton(
+                              icon: const Icon(Icons.assignment_ind_outlined, color: Colors.black),
+                              onPressed: () {
+                                setState((){
+                                  showGrid=false;
+                                  showText=true;
+                                });
+                              },
+                          ),
+                           const SizedBox(width: 40),
+                      ],
+                    ),
                   )
                 ],
-              )
+              ),
+              if (showGrid)
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                  ),
+                  itemCount: 9,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: Colors.grey,
+                      child: Center(
+                        child: Text(
+                          'Elemento $index',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                if (showText)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text('FOTOS Y VIDEOS EN'),
+                      Text('LOS QUE APARECES'),
+                    ],
+                  ),
+                ),
             ],
           ),
+          
         ),
       ),
     );
   }
 }
+
+
